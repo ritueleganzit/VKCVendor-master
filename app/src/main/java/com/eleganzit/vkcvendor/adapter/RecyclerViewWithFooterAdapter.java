@@ -1,11 +1,16 @@
 package com.eleganzit.vkcvendor.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
+import com.eleganzit.vkcvendor.HomeActivity;
 import com.eleganzit.vkcvendor.R;
 
 import java.util.ArrayList;
@@ -16,20 +21,28 @@ public class RecyclerViewWithFooterAdapter extends RecyclerView.Adapter<Recycler
     private static final int FOOTER_VIEW = 11;
     private ArrayList<String> data; // Take any list that matches your requirement.
     private Context context;
+    Activity activity;
 
     // Define a constructor
     public RecyclerViewWithFooterAdapter(Context context, ArrayList<String> data) {
         this.context = context;
+        this.activity= (Activity) context;
         this.data = data;
     }
 
     // Define a ViewHolder for Footer view
     public class FooterViewHolder extends ViewHolder {
+        ImageView imgcheck;
+        LinearLayout check,savelin;
         public FooterViewHolder(View itemView) {
             super(itemView);
+            imgcheck=itemView.findViewById(R.id.imgcheck);
+            savelin=itemView.findViewById(R.id.savelin);
+            check=itemView.findViewById(R.id.check);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     // Do whatever you want on clicking the item
                 }
             });
@@ -86,7 +99,20 @@ public class RecyclerViewWithFooterAdapter extends RecyclerView.Adapter<Recycler
 
                 vh.bindView(position);
             } else if (holder instanceof FooterViewHolder) {
-                FooterViewHolder vh = (FooterViewHolder) holder;
+                final FooterViewHolder vh = (FooterViewHolder) holder;
+                vh.check.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        vh.imgcheck.setImageDrawable(context.getResources().getDrawable(R.mipmap.ic_checkbox));
+                    }
+                });
+                vh.savelin.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        context.startActivity(new Intent(context, HomeActivity.class));
+                        activity.finish();
+                    }
+                });
             }
         } catch (Exception e) {
             e.printStackTrace();

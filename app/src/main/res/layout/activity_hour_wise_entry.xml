@@ -153,6 +153,7 @@
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                         android:layout_height="wrap_content"
                         android:hint="Article "
+                        android:id="@+id/arted"
                         android:focusable="false"
                         android:drawableRight="@drawable/ic_downarrow"
                         android:textColorHint="@color/gray"

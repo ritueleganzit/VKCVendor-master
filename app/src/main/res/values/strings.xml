@@ -13,4 +13,6 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="upload">Upload Images (max 3)</string>
+    <string name="defects">There are <b>100</b> defects recorded for this article so far!!!</string>
 </resources>

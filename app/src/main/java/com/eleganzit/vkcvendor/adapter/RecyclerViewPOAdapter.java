@@ -1,11 +1,15 @@
 package com.eleganzit.vkcvendor.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.eleganzit.vkcvendor.MarkPOCompleteActivity;
 import com.eleganzit.vkcvendor.R;
 
 import java.util.ArrayList;
@@ -25,14 +29,18 @@ public class RecyclerViewPOAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     // Define a ViewHolder for Footer view
     public class FooterViewHolder extends ViewHolder {
-        public FooterViewHolder(View itemView) {
+        LinearLayout next;
+
+        public FooterViewHolder(final View itemView) {
             super(itemView);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Do whatever you want on clicking the item
-                }
-            });
+            next = itemView.findViewById(R.id.next);
+
+        }
+    }   public class HeaderViewHolder extends ViewHolder {
+
+        public HeaderViewHolder(final View itemView) {
+            super(itemView);
+
         }
     }
 
@@ -60,25 +68,27 @@ public class RecyclerViewPOAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         if (viewType == HEADER_VIEW) {
             v = LayoutInflater.from(context).inflate(R.layout.list_item_footer_po, parent, false);
-            FooterViewHolder vh = new FooterViewHolder(v);
+            HeaderViewHolder vh = new HeaderViewHolder(v);
             return vh;
         }
-  if (viewType == FOOTER_VIEW) {
+        else if (viewType == FOOTER_VIEW) {
             v = LayoutInflater.from(context).inflate(R.layout.row_po, parent, false);
             FooterViewHolder vh = new FooterViewHolder(v);
             return vh;
         }
+else {
+            v = LayoutInflater.from(context).inflate(R.layout.list_item_normal, parent, false);
 
-        v = LayoutInflater.from(context).inflate(R.layout.list_item_normal, parent, false);
+            NormalViewHolder vh = new NormalViewHolder(v);
 
-        NormalViewHolder vh = new NormalViewHolder(v);
-
-        return vh;
+            return vh;
+        }
     }
 
     // Now bind the ViewHolder in onBindViewHolder
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+
 
         try {
             if (holder instanceof NormalViewHolder) {
@@ -87,6 +97,16 @@ public class RecyclerViewPOAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 vh.bindView(position);
             } else if (holder instanceof FooterViewHolder) {
                 FooterViewHolder vh = (FooterViewHolder) holder;
+                vh.bindView(position);
+                vh.next.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(context, "sss" +
+                                "", Toast.LENGTH_SHORT).show();
+                        context.startActivity(new Intent(context, MarkPOCompleteActivity.class));
+
+                    }
+                });
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -121,7 +141,7 @@ public class RecyclerViewPOAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             // This is where we'll add footer.
             return HEADER_VIEW;
         }
- if (position == data.size()) {
+        if (position == data.size()) {
             // This is where we'll add footer.
             return FOOTER_VIEW;
         }

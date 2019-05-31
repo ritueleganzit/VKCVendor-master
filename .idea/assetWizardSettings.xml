@@ -35,7 +35,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="paddingPercent" value="50" />
+                                                <entry key="paddingPercent" value="30" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -46,8 +46,8 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="$PROJECT_DIR$/../VKC assets/icon/down-arrow.png" />
-                                      <entry key="outputName" value="ic_downarrow" />
+                                      <entry key="imageAsset" value="$PROJECT_DIR$/../VKC assets/icon/blank-check-box.png" />
+                                      <entry key="outputName" value="ic_uncheck" />
                                       <entry key="theme" value="CUSTOM" />
                                       <entry key="themeColor" value="7f7f7f" />
                                     </map>
@@ -98,7 +98,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="paddingPercent" value="15" />
+                                                <entry key="paddingPercent" value="20" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -110,8 +110,8 @@
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
                                       <entry key="iconShape" value="NONE" />
-                                      <entry key="imageAsset" value="$PROJECT_DIR$/../VKC assets/icon/check-box.png" />
-                                      <entry key="outputName" value="ic_checkbox" />
+                                      <entry key="imageAsset" value="$PROJECT_DIR$/../VKC assets/icon/blank-check-box.png" />
+                                      <entry key="outputName" value="ic_uncheck" />
                                     </map>
                                   </option>
                                 </PersistentState>

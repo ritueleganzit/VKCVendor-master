@@ -26,9 +26,7 @@ RecyclerView rc_hour;
         arrayList.add("fsdfsfsd");
         arrayList.add("fsdfsfsd");
         arrayList.add("fsdfsfsd");
-        arrayList.add("fsdfsfsd");
-        arrayList.add("fsdfsfsd");
-        arrayList.add("fsdfsfsd");
+
         rc_hour.setAdapter(new RecyclerViewWithFooterAdapter(HourWiseActivity.this,arrayList));
         //RecyclerViewWithFooterAdapter
 

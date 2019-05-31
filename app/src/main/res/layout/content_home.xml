@@ -73,6 +73,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
+                    android:id="@+id/tv_defects"
 
                     android:background="@drawable/transparent_bg"
                     android:fontFamily="@font/poppins_medium"

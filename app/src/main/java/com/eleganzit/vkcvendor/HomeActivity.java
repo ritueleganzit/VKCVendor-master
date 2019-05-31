@@ -1,10 +1,9 @@
 package com.eleganzit.vkcvendor;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,21 +11,22 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewOutlineProvider;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.eleganzit.vkcvendor.fragment.CompletedPoFragment;
 import com.eleganzit.vkcvendor.fragment.EntryFragment;
 import com.eleganzit.vkcvendor.fragment.MarkPOFragment;
 import com.eleganzit.vkcvendor.fragment.PlanFragment;
+import com.eleganzit.vkcvendor.fragment.ViewDefectsFragment;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
 
-    TextView plan,entry,textTitle;
+    TextView plan,entry,textTitle,tv_defects;
     LinearLayout tablayout;
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -35,6 +35,7 @@ public class HomeActivity extends AppCompatActivity
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         textTitle=findViewById(R.id.textTitle);
+        tv_defects=findViewById(R.id.tv_defects);
         plan=findViewById(R.id.plan);
         tablayout=findViewById(R.id.tablayout);
         entry=findViewById(R.id.entry);
@@ -58,10 +59,19 @@ toolbar.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
                         .replace(R.id.container, myPhotosFragment, "TAG")
                         .commit();
             }
-        });entry.setOnClickListener(new View.OnClickListener() {
+        });
+        entry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                  EntryFragment myPhotosFragment = new EntryFragment();
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, myPhotosFragment, "TAG")
+                        .commit();
+            }
+        });tv_defects.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                 ViewDefectsFragment myPhotosFragment = new ViewDefectsFragment();
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.container, myPhotosFragment, "TAG")
                         .commit();
@@ -107,6 +117,8 @@ toolbar.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
                     .commit();
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
+            startActivity(new Intent(HomeActivity.this, MessageActivity.class));
+            overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
 
         } else if (id == R.id.markpo) {
             tablayout.setVisibility(View.GONE);
@@ -117,11 +129,18 @@ toolbar.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
                     .commit();
         } else if (id == R.id.nav_manage) {
 
+            tablayout.setVisibility(View.GONE);
+            textTitle.setText("COMPLETED PO");
+            CompletedPoFragment myPhotosFragment = new CompletedPoFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.container, myPhotosFragment, "TAG")
+                    .commit();
+
         } else if (id == R.id.nav_logout) {
 
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-        return true;
+        return false;
     }
 }

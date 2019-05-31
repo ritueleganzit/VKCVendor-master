@@ -76,8 +76,8 @@
 
                     <EditText
                         android:layout_width="0dp"
-                        android:layout_weight="10"
-                        android:text="20 "
+                        android:layout_weight="8"
+                        android:hint=" "
                         android:gravity="end"
                         android:fontFamily="@font/poppins_regular"
 
