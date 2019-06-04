@@ -19,12 +19,12 @@ import java.util.ArrayList;
  */
 public class PlanFragment extends Fragment {
 
-    RecyclerView rc_plan;
     public PlanFragment() {
         // Required empty public constructor
     }
     ArrayList<String> arrayList=new ArrayList<>();
 
+    RecyclerView rc_plan;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
