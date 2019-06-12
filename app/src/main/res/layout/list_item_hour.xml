@@ -74,9 +74,9 @@
                         android:ellipsize="end"
                         />
 
-                    <TextView
+                    <EditText
                         android:layout_width="0dp"
-                        android:layout_weight="50"
+                        android:layout_weight="8"
 android:text="20"
                         android:gravity="end"
                         android:fontFamily="@font/poppins_regular"

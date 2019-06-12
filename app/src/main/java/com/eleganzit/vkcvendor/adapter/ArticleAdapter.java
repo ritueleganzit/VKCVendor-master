@@ -14,18 +14,23 @@ import android.widget.TextView;
 
 import com.eleganzit.vkcvendor.AssignToLineActivity;
 import com.eleganzit.vkcvendor.R;
+import com.eleganzit.vkcvendor.model.plan.Article;
 import com.eleganzit.vkcvendor.model.plan.PNumber;
+import com.google.android.flexbox.AlignItems;
+import com.google.android.flexbox.FlexDirection;
+import com.google.android.flexbox.FlexWrap;
+import com.google.android.flexbox.FlexboxLayoutManager;
+import com.google.android.flexbox.JustifyContent;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.MyViewHolder> {
+public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.MyViewHolder> {
 
-   List<PNumber> campaigns;
+   List<Article> campaigns;
     Context context;
     Activity activity;
 
-    public PlanAdapter(List<PNumber> campaigns, Context context) {
+    public ArticleAdapter(List<Article> campaigns, Context context) {
         this.campaigns = campaigns;
         this.context = context;
         activity = (Activity) context;
@@ -35,7 +40,7 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.MyViewHolder> 
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
-        View v= LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.row_plan,viewGroup,false);
+        View v= LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.row_article,viewGroup,false);
         MyViewHolder myViewHolder=new MyViewHolder(v);
 
         return myViewHolder;
@@ -44,21 +49,14 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.MyViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int i) {
 
-        PNumber pNumber=campaigns.get(i);
-holder.ptxtnumber.setText(pNumber.getPurDocNum());
-        RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false);
-        holder.rc_art.setLayoutManager(layoutManager);
-        holder.rc_art.setAdapter(new ArticleAdapter(pNumber.getArticledata(),context));
-        holder.rc_art.setNestedScrollingEnabled(false);
-
-        holder.cardviewsuccess.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        context.startActivity(new Intent(context, AssignToLineActivity.class));
-        activity.overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
-    }
-});
-
+        Article pNumber=campaigns.get(i);
+holder.txtart.setText(pNumber.getArticleName());
+        FlexboxLayoutManager layoutManager = new FlexboxLayoutManager();
+        layoutManager.setFlexDirection(FlexDirection.ROW);
+        layoutManager.setJustifyContent(JustifyContent.FLEX_START);
+        holder.rc_grid.setLayoutManager(layoutManager);
+        holder.rc_grid.setAdapter(new GridAdapter(pNumber.getGridData(),context));
+holder.rc_grid.setNestedScrollingEnabled(false);
     }
 
     @Override
@@ -67,14 +65,12 @@ holder.ptxtnumber.setText(pNumber.getPurDocNum());
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-CardView cardviewsuccess;
-TextView ptxtnumber;
-RecyclerView rc_art;
+TextView txtart;
+RecyclerView rc_grid;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            cardviewsuccess=itemView.findViewById(R.id.cardviewsuccess);
-            rc_art=itemView.findViewById(R.id.rc_art);
-            ptxtnumber=itemView.findViewById(R.id.ptxtnumber);
+            txtart=itemView.findViewById(R.id.txtart);
+            rc_grid=itemView.findViewById(R.id.rc_grid);
 
         }
     }

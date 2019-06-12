@@ -2,6 +2,7 @@ package com.eleganzit.vkcvendor;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,6 +16,8 @@ import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,60 +25,84 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.eleganzit.vkcvendor.adapter.PlanAdapter;
+import com.eleganzit.vkcvendor.api.RetrofitAPI;
+import com.eleganzit.vkcvendor.api.RetrofitInterface;
+import com.eleganzit.vkcvendor.model.article.ArticleResponse;
+import com.eleganzit.vkcvendor.model.line.LineResponse;
+import com.eleganzit.vkcvendor.util.UserLoggedInSession;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AssignToLineActivity extends AppCompatActivity {
 
-    String[] animals = {"L1440", "L1447", "L1446", "L14455", "L1445"};
+    List<String> stateArrayList=new ArrayList();
+    List<String> stateArrayListnum=new ArrayList();
+
+    List<String> articlelist=new ArrayList();
+    List<String> articlelistnum=new ArrayList();
+    MyArticleAdapter myArticleAdapter;
     String[] art = {"13913 ladies blue", "13913 ladies mrn"};
 ArrayList<String> arrayList=new ArrayList<>();
     ImageView addarticle,closearticle;
     TextInputEditText ed_line_number,arted;
     LinearLayout lineararticle2,save;
     RecyclerView rc_article_list;
+    UserLoggedInSession userLoggedInSession;
+    ProgressDialog progressDialog;
+    private String stateid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assign_to_line);
         //closearticle=findViewById(R.id.closearticle);
+        userLoggedInSession=new UserLoggedInSession(AssignToLineActivity.this);
+myArticleAdapter=new  MyArticleAdapter(arrayList,AssignToLineActivity.this);
+        progressDialog=new ProgressDialog(AssignToLineActivity.this);
+        progressDialog.setMessage("Please Wait");
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
         addarticle=findViewById(R.id.addarticle);
         rc_article_list=findViewById(R.id.rc_article_list);
         arted=findViewById(R.id.arted);
         RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(AssignToLineActivity.this,LinearLayoutManager.VERTICAL,false);
         rc_article_list.setLayoutManager(layoutManager);
+        rc_article_list.setAdapter(myArticleAdapter);
+
         ed_line_number=findViewById(R.id.ed_line_number);
         lineararticle2=findViewById(R.id.lineararticle2);
         save=findViewById(R.id.save);
+/*
         ed_line_number.setText(""+animals[0]);
+*/
 
         arted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final ListAdapter adapter = new ArrayAdapter(AssignToLineActivity.this, android.R.layout.simple_list_item_1, android.R.id.text1, articlelist);
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(AssignToLineActivity.this);
+                final android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(new ContextThemeWrapper(AssignToLineActivity.this, R.style.AlertDialogCustom));
 
-// add a list
-                builder.setItems(art, new DialogInterface.OnClickListener() {
+                builder.setSingleChoiceItems(adapter, -1, new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which) {
-                            case 0: arted.setText(""+art[which]);
-                            case 1: arted.setText(""+art[which]);
-                            case 2: arted.setText(""+art[which]);
-                            case 3: arted.setText(""+art[which]);
-                            case 4: arted.setText(""+art[which]);
-                        }
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
 
+
+                        arted.setText(articlelist.get(i));
 
                     }
                 });
-                AlertDialog dialog = builder.create();
-                dialog.show();
+                builder.show();
             }
 
 
@@ -83,19 +110,18 @@ ArrayList<String> arrayList=new ArrayList<>();
         ed_line_number.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(AssignToLineActivity.this);
+                final ListAdapter adapter = new ArrayAdapter(AssignToLineActivity.this, android.R.layout.simple_list_item_1, android.R.id.text1, stateArrayList);
 
-// add a list
-                builder.setItems(animals, new DialogInterface.OnClickListener() {
+                final android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(new ContextThemeWrapper(AssignToLineActivity.this, R.style.AlertDialogCustom));
+
+                builder.setSingleChoiceItems(adapter, -1, new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which) {
-                            case 0: ed_line_number.setText(""+animals[which]);
-                            case 1: ed_line_number.setText(""+animals[which]);
-                            case 2: ed_line_number.setText(""+animals[which]);
-                            case 3: ed_line_number.setText(""+animals[which]);
-                            case 4: ed_line_number.setText(""+animals[which]);
-                        }
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+
+
+                        ed_line_number.setText(stateArrayList.get(i));
+                        stateid=stateArrayListnum.get(i);
 
                         final Dialog d=new Dialog(AssignToLineActivity.this,
                                 R.style.Theme_Dialog);
@@ -108,7 +134,7 @@ ArrayList<String> arrayList=new ArrayList<>();
                         ok.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-d.dismiss();
+                                d.dismiss();
                             }
                         });
 
@@ -127,16 +153,17 @@ d.dismiss();
                         }
                     }
                 });
-                AlertDialog dialog = builder.create();
-                dialog.show();
+                builder.show();
+
+
             }
         });
         addarticle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                arrayList.add("Hello");
-                rc_article_list.setAdapter(new MyArticleAdapter(arrayList,AssignToLineActivity.this));
+                arrayList.add("");
+                myArticleAdapter.notifyDataSetChanged();
 
             }
         });
@@ -155,10 +182,77 @@ d.dismiss();
             }
         });*/
 
+        getVendorLine();
+        getArticleList();
         findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
+            }
+        });
+    }
+
+    private void getVendorLine() {
+        progressDialog.show();
+        RetrofitInterface myInterface = RetrofitAPI.getRetrofit().create(RetrofitInterface.class);
+
+        Call<LineResponse> call=myInterface.getVendorLine(userLoggedInSession.getUserDetails().get(UserLoggedInSession.USER_ID));
+        call.enqueue(new Callback<LineResponse>() {
+            @Override
+            public void onResponse(Call<LineResponse> call, Response<LineResponse> response) {
+
+
+                if (response.isSuccessful())
+                {
+                    Log.d("stattelist","--"+response.body().getMessage()    );
+
+                    for (int i=0;i<response.body().getData().size();i++)
+                    {
+                        stateArrayList.add(response.body().getData().get(i).getLineNumber());
+                        stateArrayListnum.add(response.body().getData().get(i).getLineId());
+                        ed_line_number.setText(stateArrayList.get(0));
+
+                    }
+
+                    progressDialog.dismiss();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LineResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void getArticleList() {
+        progressDialog.show();
+        RetrofitInterface myInterface = RetrofitAPI.getRetrofit().create(RetrofitInterface.class);
+
+        Call<ArticleResponse> call=myInterface.getArticleList(userLoggedInSession.getUserDetails().get(UserLoggedInSession.USER_ID));
+        call.enqueue(new Callback<ArticleResponse>() {
+            @Override
+            public void onResponse(Call<ArticleResponse> call, Response<ArticleResponse> response) {
+
+
+                if (response.isSuccessful())
+                {
+                    Log.d("stattelist","--"+response.body().getMessage()    );
+
+                    for (int i=0;i<response.body().getData().size();i++)
+                    {
+                        articlelist.add(response.body().getData().get(i).getArticle());
+                        arted.setText(articlelist.get(0));
+
+                    }
+
+                    progressDialog.dismiss();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArticleResponse> call, Throwable t) {
+
             }
         });
     }
@@ -194,29 +288,25 @@ d.dismiss();
 
         @Override
         public void onBindViewHolder(@NonNull final MyViewHolder holder, final int i) {
-        holder.tvarticle.setHint("Article "+(i+2));
+        holder.tvarticle.setHint("Select Article "+(i+2));
         holder.tvarticle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(AssignToLineActivity.this);
+                final ListAdapter adapter = new ArrayAdapter(AssignToLineActivity.this, android.R.layout.simple_list_item_1, android.R.id.text1, articlelist);
 
-// add a list
-                builder.setItems(art, new DialogInterface.OnClickListener() {
+                final android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(new ContextThemeWrapper(AssignToLineActivity.this, R.style.AlertDialogCustom));
+
+                builder.setSingleChoiceItems(adapter, -1, new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which) {
-                            case 0: holder.tvarticle.setText(""+art[which]);
-                            case 1: holder.tvarticle.setText(""+art[which]);
-                            case 2: holder.tvarticle.setText(""+art[which]);
-                            case 3: holder.tvarticle.setText(""+art[which]);
-                            case 4: holder.tvarticle.setText(""+art[which]);
-                        }
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
 
+
+                        holder.tvarticle.setText(articlelist.get(i));
 
                     }
                 });
-                AlertDialog dialog = builder.create();
-                dialog.show();
+                builder.show();
             }
         });
 

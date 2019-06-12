@@ -21,10 +21,12 @@ import com.eleganzit.vkcvendor.fragment.EntryFragment;
 import com.eleganzit.vkcvendor.fragment.MarkPOFragment;
 import com.eleganzit.vkcvendor.fragment.PlanFragment;
 import com.eleganzit.vkcvendor.fragment.ViewDefectsFragment;
+import com.eleganzit.vkcvendor.util.UserLoggedInSession;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    UserLoggedInSession userLoggedInSession;
 
     TextView plan,entry,textTitle,tv_defects;
     LinearLayout tablayout;
@@ -40,7 +42,9 @@ public class HomeActivity extends AppCompatActivity
         tablayout=findViewById(R.id.tablayout);
         entry=findViewById(R.id.entry);
         setSupportActionBar(toolbar);
-getSupportActionBar().setElevation(0);
+        userLoggedInSession=new UserLoggedInSession(HomeActivity.this);
+
+        getSupportActionBar().setElevation(0);
 toolbar.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -137,7 +141,7 @@ toolbar.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
                     .commit();
 
         } else if (id == R.id.nav_logout) {
-
+userLoggedInSession.logoutUser();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

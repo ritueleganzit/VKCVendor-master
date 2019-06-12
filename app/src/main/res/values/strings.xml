@@ -15,4 +15,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="upload">Upload Images     <font size="12">(max 3)</font> </string>
     <string name="defects">There are <b>100</b> defects recorded for this article so far!!!</string>
+    <string name="quantitypending" ><b>30</b>(Total Qty:100)</string>
+    <string name="Please_enter_email">Please Email Address</string>
+    <string name="Please_Enter_Valid_Email">Please Enter Valid Email</string>
 </resources>

@@ -58,11 +58,11 @@
                 android:fontFamily="@font/poppins_regular"
 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                 android:layout_height="wrap_content"
-                android:hint="Phone Number"
+                android:hint="Enter Email"
                 android:textColorHint="@color/gray"
                 android:backgroundTint="@color/gray"
                 android:imeOptions="actionNext"
-                android:inputType="phone"
+                android:inputType="textEmailAddress"
                 android:singleLine="true" />
 
         </android.support.design.widget.TextInputLayout>
@@ -86,6 +86,7 @@ android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                 android:inputType="textPassword"
                 android:singleLine="true"
                 android:imeOptions="actionNext"
+                android:id="@+id/ed_pw"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                 android:layout_height="wrap_content"
                 android:hint="Password"

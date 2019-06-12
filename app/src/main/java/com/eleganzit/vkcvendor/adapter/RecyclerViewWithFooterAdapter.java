@@ -82,7 +82,7 @@ public class RecyclerViewWithFooterAdapter extends RecyclerView.Adapter<Recycler
             return vh;
         }
 
-        v = LayoutInflater.from(context).inflate(R.layout.list_item_normal, parent, false);
+        v = LayoutInflater.from(context).inflate(R.layout.list_item_hour, parent, false);
 
         NormalViewHolder vh = new NormalViewHolder(v);
 
