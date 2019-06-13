@@ -101,30 +101,45 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <android.support.design.widget.TextInputLayout
-                android:layout_centerVertical="true"
-                android:theme="@style/TextLabel"
-                android:textColorHint="@color/gray"
-                android:backgroundTint="@color/gray"
-
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/ed_line_number"
-                    android:focusable="false"
-                    android:layout_width="match_parent"
-                    android:fontFamily="@font/poppins_regular"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                    android:layout_height="wrap_content"
-                    android:hint="Line Numbers"
-                    android:drawableRight="@drawable/ic_downarrow"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <android.support.design.widget.TextInputLayout
+                    android:layout_centerVertical="true"
+                    android:theme="@style/TextLabel"
                     android:textColorHint="@color/gray"
                     android:backgroundTint="@color/gray"
+                    android:layout_weight="1"
 
-                    android:singleLine="true" />
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-            </android.support.design.widget.TextInputLayout>
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/ed_line_number"
+                        android:focusable="false"
+                        android:layout_width="match_parent"
+                        android:fontFamily="@font/poppins_regular"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                        android:layout_height="wrap_content"
+                        android:hint="Line Numbers"
+                        android:drawableRight="@drawable/ic_downarrow"
+                        android:textColorHint="@color/gray"
+                        android:backgroundTint="@color/gray"
+
+                        android:singleLine="true" />
+
+                </android.support.design.widget.TextInputLayout>
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_width="30dp"
+                    android:layout_height="25dp"
+                    android:id="@+id/addmanpower"
+
+                    android:src="@drawable/addmanpower"/>
+
+            </LinearLayout>
+
 
             <LinearLayout
                 android:layout_gravity="center"

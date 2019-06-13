@@ -18,4 +18,6 @@
     <string name="quantitypending" ><b>30</b>(Total Qty:100)</string>
     <string name="Please_enter_email">Please Email Address</string>
     <string name="Please_Enter_Valid_Email">Please Enter Valid Email</string>
+    <string name="Please_enter_stitcher">Please enter no of stitcher</string>
+    <string name="Please_enter_helper">Please enter no of helper</string>
 </resources>

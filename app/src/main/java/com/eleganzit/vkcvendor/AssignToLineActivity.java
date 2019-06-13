@@ -27,7 +27,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
+import com.eleganzit.vkcvendor.adapter.ArticleAdapter;
 import com.eleganzit.vkcvendor.adapter.PlanAdapter;
 import com.eleganzit.vkcvendor.api.RetrofitAPI;
 import com.eleganzit.vkcvendor.api.RetrofitInterface;
@@ -45,14 +49,15 @@ import retrofit2.Response;
 
 public class AssignToLineActivity extends AppCompatActivity {
 
+    String stateId="",no_of_stitcher,no_of_helper;
+
     List<String> stateArrayList=new ArrayList();
     List<String> stateArrayListnum=new ArrayList();
 
     List<String> articlelist=new ArrayList();
-    List<ArticleSelection> articlelistnum=new ArrayList();
+    List<String> articlelistnum=new ArrayList();
     MyArticleAdapter myArticleAdapter;
-    String[] art = {"13913 ladies blue", "13913 ladies mrn"};
-ArrayList<String> arrayList=new ArrayList<>();
+
     ImageView addarticle,closearticle;
     TextInputEditText ed_line_number,arted;
     LinearLayout lineararticle2,save;
@@ -60,6 +65,8 @@ ArrayList<String> arrayList=new ArrayList<>();
     UserLoggedInSession userLoggedInSession;
     ProgressDialog progressDialog;
     private String stateid;
+    ImageView addmanpower;
+    boolean isblank=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +82,7 @@ myArticleAdapter=new  MyArticleAdapter(articlelistnum,AssignToLineActivity.this)
         progressDialog.setCanceledOnTouchOutside(false);
         addarticle=findViewById(R.id.addarticle);
         rc_article_list=findViewById(R.id.rc_article_list);
+        addmanpower=findViewById(R.id.addmanpower);
         arted=findViewById(R.id.arted);
         RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(AssignToLineActivity.this,LinearLayoutManager.VERTICAL,false);
         rc_article_list.setLayoutManager(layoutManager);
@@ -86,7 +94,63 @@ myArticleAdapter=new  MyArticleAdapter(articlelistnum,AssignToLineActivity.this)
 /*
         ed_line_number.setText(""+animals[0]);
 */
+        addmanpower.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog d=new Dialog(AssignToLineActivity.this,
+                        R.style.Theme_Dialog);
+                d.setContentView(R.layout.manpower_dialog);
 
+                TextView ok=d.findViewById(R.id.ok);
+                TextView cancel=d.findViewById(R.id.cancel);
+                final EditText ed_stitcher=d.findViewById(R.id.ed_stitcher);
+                final EditText ed_helper=d.findViewById(R.id.ed_helper);
+
+                ok.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (ed_stitcher.getText().toString().equals("")) {
+                            ed_stitcher.setError(""+getResources().getString(R.string.Please_enter_stitcher));
+
+                            YoYo.with(Techniques.Shake).duration(700).repeat(0).playOn(ed_stitcher);
+
+                            ed_stitcher.requestFocus();
+                        }
+                        else  if (ed_helper.getText().toString().equals("")) {
+                            ed_helper.setError(""+getResources().getString(R.string.Please_enter_helper));
+
+                            YoYo.with(Techniques.Shake).duration(700).repeat(0).playOn(ed_helper);
+
+                            ed_helper.requestFocus();
+                        }
+                        else
+                        {
+                            no_of_helper=""+ed_helper.getText().toString();
+                            no_of_stitcher=""+ed_stitcher.getText().toString();
+                            Toast.makeText(AssignToLineActivity.this, "Data Save", Toast.LENGTH_SHORT).show();
+                            d.dismiss();
+
+
+                        }
+
+                    }
+                });
+
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        d.dismiss();
+
+                    }
+                });
+
+                d.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                if(!isFinishing())
+                {
+                    d.show();
+                }
+            }
+        });
         arted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,35 +194,25 @@ String newdata=articlelist.get(i);
 
                         ed_line_number.setText(stateArrayList.get(i));
                         stateid=stateArrayListnum.get(i);
+                        stateId=stateid;
 
-                        final Dialog d=new Dialog(AssignToLineActivity.this,
-                                R.style.Theme_Dialog);
-                        d.setContentView(R.layout.manpower_dialog);
-
-                        TextView ok=d.findViewById(R.id.ok);
-                        TextView cancel=d.findViewById(R.id.cancel);
-                        final EditText ed_email=d.findViewById(R.id.ed_email);
-
-                        ok.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                d.dismiss();
-                            }
-                        });
-
-                        cancel.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                d.dismiss();
-
-                            }
-                        });
-
-                        d.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                        if(!isFinishing())
+                        no_of_helper="";
+                        no_of_stitcher="";
+                        if (articlelist.size()>0)
                         {
-                            d.show();
+                            articlelist.clear();
+                            getArticleList();
+
                         }
+                        if (articlelistnum.size()>0)
+                        {
+                            articlelistnum.clear();
+                            myArticleAdapter.campaigns.clear();
+                            myArticleAdapter=new  MyArticleAdapter(articlelistnum,AssignToLineActivity.this);
+rc_article_list.setAdapter(myArticleAdapter);
+                        }
+
+
                     }
                 });
                 builder.show();
@@ -169,19 +223,90 @@ String newdata=articlelist.get(i);
         addarticle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArticleSelection art=new ArticleSelection(articlelist);
 
-                articlelistnum.add(art);
+                articlelistnum.add("");
 
                 myArticleAdapter.notifyDataSetChanged();
-
+                Log.d("unyugh",""+articlelistnum);
             }
         });
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+
+                if (no_of_helper==null || no_of_stitcher==null) {
+                    Toast.makeText(AssignToLineActivity.this, "Please Enter Manpower", Toast.LENGTH_SHORT).show();
+                }
+
+                else
+                {
+
+                    for (String data:myArticleAdapter.campaigns)
+                    {
+                        if (data.equals(""))
+                        {
+                            isblank=true;
+                            break;
+                        }
+                        else
+                        {
+                            isblank=false;
+                        }
+
+
+                    }
+
+                    if (isblank)
+                    {
+                        Toast.makeText(AssignToLineActivity.this, "Please select article", Toast.LENGTH_SHORT).show();
+                    }
+                    else if (myArticleAdapter.campaigns==null)
+                    {
+                        Toast.makeText(AssignToLineActivity.this, "No ", Toast.LENGTH_SHORT).show();
+
+                    }
+                    else
+                    {
+                        Toast.makeText(AssignToLineActivity.this, "Save Data", Toast.LENGTH_SHORT).show();
+
+                        StringBuilder sb = new StringBuilder();
+                        if (myArticleAdapter.campaigns.size()>0)
+                        {
+                            sb.append(arted.getText().toString()).append(",");
+
+                        }
+                        else
+                        {
+                            sb.append(arted.getText().toString());
+
+                        }
+                        for(int i=0;i<myArticleAdapter.campaigns.size();i++)
+                        {
+                            Log.d("productsssssssss",myArticleAdapter.campaigns.get(i)+"");
+                            if (i==myArticleAdapter.campaigns.size()-1)
+                            {
+                                sb.append(myArticleAdapter.campaigns.get(i)).append("");
+                            }
+                            else {
+                                sb.append(myArticleAdapter.campaigns.get(i)).append(",");
+
+                            }
+                        }
+
+
+                        Log.d("svcg",""+sb);
+                        Log.d("svcg","helper "+no_of_helper);
+                        Log.d("svcg","stitcher "+no_of_stitcher);
+                    }
+
+                    //finish();
+
+                }
+
+
+
+
             }
         });
         /*closearticle.setOnClickListener(new View.OnClickListener() {
@@ -281,11 +406,11 @@ String newdata=articlelist.get(i);
 
     public  class MyArticleAdapter extends RecyclerView.Adapter<MyArticleAdapter.MyViewHolder> {
 
-     List<ArticleSelection> campaigns;
+     List<String> campaigns;
         Context context;
         Activity activity;
 
-    public MyArticleAdapter(List<ArticleSelection> campaigns, Context context) {
+    public MyArticleAdapter(List<String> campaigns, Context context) {
             this.campaigns = campaigns;
             this.context = context;
             activity = (Activity) context;
@@ -302,12 +427,17 @@ String newdata=articlelist.get(i);
         }
 
         @Override
-        public void onBindViewHolder(@NonNull final MyViewHolder holder, final int i) {
-        holder.tvarticle.setHint("Select Article "+(i+2));
-            final ArticleSelection articleSelection=campaigns.get(i);
-        holder.tvarticle.setOnClickListener(new View.OnClickListener() {
+        public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
+        holder.tvarticle.setHint("Select Article "+(position+2));
+            holder.tvarticle.setText(
+                   campaigns.get(position));
+
+            holder.tvarticle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                final String olddata= holder.tvarticle.getText().toString();
                 final ListAdapter adapter = new ArrayAdapter(AssignToLineActivity.this, android.R.layout.simple_list_item_1, android.R.id.text1, articlelist);
 
                 final android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(new ContextThemeWrapper(AssignToLineActivity.this, R.style.AlertDialogCustom));
@@ -316,16 +446,14 @@ String newdata=articlelist.get(i);
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
-
-                        String olddata= holder.tvarticle.getText().toString();
+if (olddata!=null && !(olddata.isEmpty())) {
+    articlelist.add(olddata);
+}
                         String newdata=articlelist.get(i);
 
                         holder.tvarticle.setText(newdata);
+                        campaigns.set(position,newdata);
                         articlelist.remove(i);
-                        articlelist.add(holder.tvarticle.getText().toString());
-                        /*articlelist.remove(i);
-                        articlelist.add(olddata);
-*/
 
 
                     }
@@ -338,7 +466,7 @@ holder.closearticle.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
 
-        removeAt(i,holder.tvarticle);
+        removeAt(position,holder.tvarticle);
     }
 });
 
@@ -348,8 +476,11 @@ holder.closearticle.setOnClickListener(new View.OnClickListener() {
 
             campaigns.remove(position);
             String olddata= tvarticle.getText().toString();
+            if (olddata!=null && !(olddata.isEmpty())) {
+                articlelist.add(olddata);
 
-            articlelist.add(olddata);
+            }
+
             notifyItemRemoved(position);
             notifyItemRangeChanged(position, campaigns.size());
             notifyItemChanged(position);
