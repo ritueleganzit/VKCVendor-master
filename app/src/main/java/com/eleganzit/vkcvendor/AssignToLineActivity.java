@@ -31,6 +31,7 @@ import android.widget.TextView;
 import com.eleganzit.vkcvendor.adapter.PlanAdapter;
 import com.eleganzit.vkcvendor.api.RetrofitAPI;
 import com.eleganzit.vkcvendor.api.RetrofitInterface;
+import com.eleganzit.vkcvendor.model.ArticleSelection;
 import com.eleganzit.vkcvendor.model.article.ArticleResponse;
 import com.eleganzit.vkcvendor.model.line.LineResponse;
 import com.eleganzit.vkcvendor.util.UserLoggedInSession;
@@ -48,7 +49,7 @@ public class AssignToLineActivity extends AppCompatActivity {
     List<String> stateArrayListnum=new ArrayList();
 
     List<String> articlelist=new ArrayList();
-    List<String> articlelistnum=new ArrayList();
+    List<ArticleSelection> articlelistnum=new ArrayList();
     MyArticleAdapter myArticleAdapter;
     String[] art = {"13913 ladies blue", "13913 ladies mrn"};
 ArrayList<String> arrayList=new ArrayList<>();
@@ -66,7 +67,8 @@ ArrayList<String> arrayList=new ArrayList<>();
         setContentView(R.layout.activity_assign_to_line);
         //closearticle=findViewById(R.id.closearticle);
         userLoggedInSession=new UserLoggedInSession(AssignToLineActivity.this);
-myArticleAdapter=new  MyArticleAdapter(arrayList,AssignToLineActivity.this);
+
+myArticleAdapter=new  MyArticleAdapter(articlelistnum,AssignToLineActivity.this);
         progressDialog=new ProgressDialog(AssignToLineActivity.this);
         progressDialog.setMessage("Please Wait");
         progressDialog.setCancelable(false);
@@ -97,8 +99,14 @@ myArticleAdapter=new  MyArticleAdapter(arrayList,AssignToLineActivity.this);
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
 
+String olddata=arted.getText().toString();
+String newdata=articlelist.get(i);
 
-                        arted.setText(articlelist.get(i));
+                        arted.setText(newdata);
+                        articlelist.remove(i);
+                        articlelist.add(olddata);
+
+
 
                     }
                 });
@@ -161,8 +169,10 @@ myArticleAdapter=new  MyArticleAdapter(arrayList,AssignToLineActivity.this);
         addarticle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ArticleSelection art=new ArticleSelection(articlelist);
 
-                arrayList.add("");
+                articlelistnum.add(art);
+
                 myArticleAdapter.notifyDataSetChanged();
 
             }
@@ -242,9 +252,14 @@ myArticleAdapter=new  MyArticleAdapter(arrayList,AssignToLineActivity.this);
                     for (int i=0;i<response.body().getData().size();i++)
                     {
                         articlelist.add(response.body().getData().get(i).getArticle());
-                        arted.setText(articlelist.get(0));
+
 
                     }
+                    arted.setText(articlelist.get(0));
+
+                    articlelist.remove(0);
+
+                    Log.d("stattelist","--"+articlelist    );
 
                     progressDialog.dismiss();
                 }
@@ -266,11 +281,11 @@ myArticleAdapter=new  MyArticleAdapter(arrayList,AssignToLineActivity.this);
 
     public  class MyArticleAdapter extends RecyclerView.Adapter<MyArticleAdapter.MyViewHolder> {
 
-        ArrayList<String> campaigns;
+     List<ArticleSelection> campaigns;
         Context context;
         Activity activity;
 
-    public MyArticleAdapter(ArrayList<String> campaigns, Context context) {
+    public MyArticleAdapter(List<ArticleSelection> campaigns, Context context) {
             this.campaigns = campaigns;
             this.context = context;
             activity = (Activity) context;
@@ -289,6 +304,7 @@ myArticleAdapter=new  MyArticleAdapter(arrayList,AssignToLineActivity.this);
         @Override
         public void onBindViewHolder(@NonNull final MyViewHolder holder, final int i) {
         holder.tvarticle.setHint("Select Article "+(i+2));
+            final ArticleSelection articleSelection=campaigns.get(i);
         holder.tvarticle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -301,8 +317,16 @@ myArticleAdapter=new  MyArticleAdapter(arrayList,AssignToLineActivity.this);
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
 
+                        String olddata= holder.tvarticle.getText().toString();
+                        String newdata=articlelist.get(i);
 
-                        holder.tvarticle.setText(articlelist.get(i));
+                        holder.tvarticle.setText(newdata);
+                        articlelist.remove(i);
+                        articlelist.add(holder.tvarticle.getText().toString());
+                        /*articlelist.remove(i);
+                        articlelist.add(olddata);
+*/
+
 
                     }
                 });
@@ -313,23 +337,27 @@ myArticleAdapter=new  MyArticleAdapter(arrayList,AssignToLineActivity.this);
 holder.closearticle.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
-        removeAt(i);
+
+        removeAt(i,holder.tvarticle);
     }
 });
 
         }
 
-        private void removeAt(int position) {
+        private void removeAt(int position, TextInputEditText tvarticle) {
 
-            arrayList.remove(position);
+            campaigns.remove(position);
+            String olddata= tvarticle.getText().toString();
+
+            articlelist.add(olddata);
             notifyItemRemoved(position);
-            notifyItemRangeChanged(position, arrayList.size());
+            notifyItemRangeChanged(position, campaigns.size());
             notifyItemChanged(position);
         }
 
         @Override
         public int getItemCount() {
-            return arrayList.size();
+            return campaigns.size();
         }
 
         public class MyViewHolder extends RecyclerView.ViewHolder {
