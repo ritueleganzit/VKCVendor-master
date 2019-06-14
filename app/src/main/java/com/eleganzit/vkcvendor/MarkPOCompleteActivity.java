@@ -31,23 +31,22 @@ import java.util.ArrayList;
 import me.nereo.multi_image_selector.MultiImageSelector;
 
 public class MarkPOCompleteActivity extends AppCompatActivity {
-RecyclerView rc_po_complete_list;
-    ImageView aadhar_front_pic,aadhar_back_pic;
-    ArrayList<String> arrayList=new ArrayList<>();
+    RecyclerView rc_po_complete_list;
+    ImageView aadhar_front_pic, aadhar_back_pic;
+    ArrayList<String> arrayList = new ArrayList<>();
     private static final int REQUEST_IMAGE = 201;
     protected static final int REQUEST_STORAGE_READ_ACCESS_PERMISSION = 202;
     private ArrayList<String> mSelectPath;
 
-
-    ArrayList<String> str_photo_array=new ArrayList<>();
+    ArrayList<String> str_photo_array = new ArrayList<>();
     private String mediapath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mark_pocomplete);
-        rc_po_complete_list=findViewById(R.id.rc_po_complete_list);
-        RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(MarkPOCompleteActivity.this,LinearLayoutManager.VERTICAL,false);
+        rc_po_complete_list = findViewById(R.id.rc_po_complete_list);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MarkPOCompleteActivity.this, LinearLayoutManager.VERTICAL, false);
         rc_po_complete_list.setLayoutManager(layoutManager);
 
         arrayList.add("fsdfsfsd");
@@ -55,7 +54,7 @@ RecyclerView rc_po_complete_list;
         arrayList.add("fsdfsfsd");
         arrayList.add("fsdfsfsd");
 
-        rc_po_complete_list.setAdapter(new MarkPOCompleteAdapter(MarkPOCompleteActivity.this,arrayList));
+        rc_po_complete_list.setAdapter(new MarkPOCompleteAdapter(MarkPOCompleteActivity.this, arrayList));
         findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,9 +66,8 @@ RecyclerView rc_po_complete_list;
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
-
 
 
     public class MarkPOCompleteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -97,12 +95,14 @@ RecyclerView rc_po_complete_list;
                     }
                 });
             }
-        }  public class FooterViewHolderUpload extends ViewHolder {
+        }
+
+        public class FooterViewHolderUpload extends ViewHolder {
 
             public FooterViewHolderUpload(View itemView) {
                 super(itemView);
-                aadhar_front_pic=itemView.findViewById(R.id.aadhar_front_pic);
-                aadhar_back_pic=itemView.findViewById(R.id.aadhar_back_pic);
+                aadhar_front_pic = itemView.findViewById(R.id.aadhar_front_pic);
+                aadhar_back_pic = itemView.findViewById(R.id.aadhar_back_pic);
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -143,7 +143,8 @@ RecyclerView rc_po_complete_list;
                 v = LayoutInflater.from(context).inflate(R.layout.row_po_complete, parent, false);
                 FooterViewHolder vh = new FooterViewHolder(v);
                 return vh;
-            } if (viewType == FOOTER_VIEW2) {
+            }
+            if (viewType == FOOTER_VIEW2) {
                 v = LayoutInflater.from(context).inflate(R.layout.row_markpo_uploadpic, parent, false);
                 FooterViewHolderUpload vh = new FooterViewHolderUpload(v);
                 return vh;
@@ -167,12 +168,12 @@ RecyclerView rc_po_complete_list;
                     vh.bindView(position);
                 } else if (holder instanceof FooterViewHolder) {
                     FooterViewHolder vh = (FooterViewHolder) holder;
-                }else if (holder instanceof FooterViewHolderUpload) {
+                } else if (holder instanceof FooterViewHolderUpload) {
                     FooterViewHolderUpload vh = (FooterViewHolderUpload) holder;
                     aadhar_front_pic.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-pickImage();
+                            pickImage();
 
                         }
                     });
@@ -214,7 +215,7 @@ pickImage();
                 // This is where we'll add footer.
                 return FOOTER_VIEW;
             }
-            if (position == data.size()-1) {
+            if (position == data.size() - 1) {
                 // This is where we'll add footer.
                 return FOOTER_VIEW2;
             }
@@ -271,13 +272,14 @@ pickImage();
 
             MultiImageSelector selector = MultiImageSelector.create(MarkPOCompleteActivity.this);
             selector.single();
-           // selector.count(6);
+            // selector.count(6);
             selector.showCamera(false);
 
             selector.origin(mSelectPath);
             selector.start(MarkPOCompleteActivity.this, REQUEST_IMAGE);
         }
     }
+
     private void requestPermission(final String permission, String rationale, final int requestCode) {
         if (ActivityCompat.shouldShowRequestPermissionRationale(MarkPOCompleteActivity.this, permission)) {
             new AlertDialog.Builder(MarkPOCompleteActivity.this)

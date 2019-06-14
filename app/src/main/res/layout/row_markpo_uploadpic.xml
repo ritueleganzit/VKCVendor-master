@@ -8,17 +8,12 @@
     android:layout_marginRight="5dp"
     app:cardBackgroundColor="#ffffff"
     app:cardCornerRadius="5dp"
-
     app:cardElevation="5dp"
-
     app:cardUseCompatPadding="true">
-
-
 
     <LinearLayout android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        xmlns:android="http://schemas.android.com/apk/res/android">
+        android:layout_height="wrap_content">
         <LinearLayout
             android:id="@+id/first"
             android:layout_width="match_parent"

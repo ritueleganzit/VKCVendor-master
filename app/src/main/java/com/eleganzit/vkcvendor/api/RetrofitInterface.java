@@ -5,6 +5,7 @@ import com.eleganzit.vkcvendor.model.LoginRespose;
 import com.eleganzit.vkcvendor.model.article.ArticleResponse;
 import com.eleganzit.vkcvendor.model.line.LineResponse;
 import com.eleganzit.vkcvendor.model.plan.PlanResponse;
+import com.eleganzit.vkcvendor.model.searchCompletedPO.SearchCompletedPOResponse;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -61,6 +62,14 @@ public interface RetrofitInterface {
             @Field("vendor_id") String vendor_id,
             @Field("message") String message,
             @Field("date_time") String date_time
+
+    );
+
+    @FormUrlEncoded()
+    @POST("/VKC-API/searchcompletedPO")
+    Call<SearchCompletedPOResponse> searchcompletedPO(
+            @Field("start_date") String start_date,
+            @Field("end_date") String end_date
 
     );
 

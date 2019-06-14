@@ -61,6 +61,7 @@ public class HomeActivity extends AppCompatActivity
             public void onClick(View v) {
                 PlanFragment myPhotosFragment = new PlanFragment();
                 getSupportFragmentManager().beginTransaction()
+                        .addToBackStack("HomeActivity")
                         .replace(R.id.container, myPhotosFragment, "TAG")
                         .commit();
             }
@@ -70,6 +71,7 @@ public class HomeActivity extends AppCompatActivity
             public void onClick(View v) {
                 EntryFragment myPhotosFragment = new EntryFragment();
                 getSupportFragmentManager().beginTransaction()
+                        .addToBackStack("HomeActivity")
                         .replace(R.id.container, myPhotosFragment, "TAG")
                         .commit();
             }
@@ -79,10 +81,18 @@ public class HomeActivity extends AppCompatActivity
             public void onClick(View v) {
                 ViewDefectsFragment myPhotosFragment = new ViewDefectsFragment();
                 getSupportFragmentManager().beginTransaction()
+                        .addToBackStack("HomeActivity")
                         .replace(R.id.container, myPhotosFragment, "TAG")
                         .commit();
             }
         });
+        textTitle.setText("HOME");
+
+        tablayout.setVisibility(View.VISIBLE);
+        PlanFragment myPhotosFragment = new PlanFragment();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, myPhotosFragment, "TAG")
+                .commit();
     }
 
     @Override
@@ -98,13 +108,7 @@ public class HomeActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        textTitle.setText("HOME");
 
-        tablayout.setVisibility(View.VISIBLE);
-        PlanFragment myPhotosFragment = new PlanFragment();
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, myPhotosFragment, "TAG")
-                .commit();
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -119,6 +123,7 @@ public class HomeActivity extends AppCompatActivity
 
             PlanFragment myPhotosFragment = new PlanFragment();
             getSupportFragmentManager().beginTransaction()
+                    .addToBackStack("HomeActivity")
                     .replace(R.id.container, myPhotosFragment, "TAG")
                     .commit();
             // Handle the camera action
@@ -131,6 +136,7 @@ public class HomeActivity extends AppCompatActivity
             textTitle.setText("MARK PO COMPLETE");
             MarkPOFragment myPhotosFragment = new MarkPOFragment();
             getSupportFragmentManager().beginTransaction()
+                    .addToBackStack("HomeActivity")
                     .replace(R.id.container, myPhotosFragment, "TAG")
                     .commit();
         } else if (id == R.id.nav_manage) {
@@ -139,6 +145,7 @@ public class HomeActivity extends AppCompatActivity
             textTitle.setText("COMPLETED PO");
             CompletedPoFragment myPhotosFragment = new CompletedPoFragment();
             getSupportFragmentManager().beginTransaction()
+                    .addToBackStack("HomeActivity")
                     .replace(R.id.container, myPhotosFragment, "TAG")
                     .commit();
 

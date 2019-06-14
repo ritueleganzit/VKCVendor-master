@@ -8,7 +8,7 @@
     android:layout_marginRight="5dp"
     app:cardBackgroundColor="#ffffff"
     app:cardCornerRadius="5dp"
-app:contentPadding="5dp"
+    app:contentPadding="5dp"
     app:cardElevation="5dp"
 
     app:cardUseCompatPadding="true">
@@ -49,6 +49,7 @@ app:contentPadding="5dp"
                         />
 
                     <TextView
+                        android:id="@+id/txt_po_number"
                         android:layout_width="0dp"
                         android:layout_weight="50"
                         android:singleLine="true"
@@ -75,6 +76,7 @@ app:contentPadding="5dp"
                         />
 
                     <TextView
+                        android:id="@+id/txt_date"
                         android:layout_width="0dp"
                         android:layout_weight="50"
                         android:text="12/01/2019 "
@@ -101,6 +103,7 @@ app:contentPadding="5dp"
                         />
 
                     <TextView
+                        android:id="@+id/txt_line_number"
                         android:layout_width="0dp"
                         android:layout_weight="50"
                         android:text="L1213 "
@@ -131,6 +134,7 @@ app:contentPadding="5dp"
                         />
 
                     <TextView
+                        android:id="@+id/txt_article"
                         android:layout_width="0dp"
                         android:layout_weight="50"
                         android:gravity="end"
@@ -159,6 +163,7 @@ app:contentPadding="5dp"
                         />
 
                     <TextView
+                        android:id="@+id/txt_quantity"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:singleLine="true"
@@ -173,19 +178,21 @@ app:contentPadding="5dp"
                         />
 
 
-                </TableRow><TableRow android:layout_marginBottom="5dp">
+                </TableRow>
+
+                <TableRow android:layout_marginBottom="5dp">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_weight="50"
                     android:fontFamily="@font/poppins_regular"
-
                     android:text="Defects Count"
                     android:singleLine="true"
                     android:ellipsize="end"
                     />
 
                 <TextView
+                    android:id="@+id/txt_defects"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
