@@ -1,7 +1,13 @@
 package com.eleganzit.vkcvendor.adapter;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -101,8 +107,7 @@ else {
                 vh.next.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(context, "sss" +
-                                "", Toast.LENGTH_SHORT).show();
+
                         context.startActivity(new Intent(context, MarkPOCompleteActivity.class));
 
                     }
@@ -163,4 +168,7 @@ else {
             // bindView() method to implement actions
         }
     }
+
+
+
 }

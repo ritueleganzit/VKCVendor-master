@@ -1,0 +1,33 @@
+<LinearLayout android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:descendantFocusability="blocksDescendants"
+
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtart"
+                        android:layout_weight="1"
+                        android:text="13916 ladies Mrn"
+
+                        />
+                    <android.support.v7.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rc_grid"
+>
+
+                    </android.support.v7.widget.RecyclerView>
+
+
+
+</LinearLayout>
+
+
+
+
+

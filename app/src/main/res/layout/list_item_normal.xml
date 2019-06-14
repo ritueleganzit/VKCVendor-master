@@ -74,10 +74,37 @@
                         android:ellipsize="end"
                         />
 
-                    <EditText
+                    <TextView
                         android:layout_width="0dp"
-                        android:layout_weight="8"
-                        android:hint=" "
+                        android:layout_weight="50"
+android:text="20"
+                        android:gravity="end"
+                        android:fontFamily="@font/poppins_regular"
+
+                        android:textColor="@color/black"
+                        android:singleLine="true"
+                        android:ellipsize="end"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                        />
+
+
+                </TableRow>
+<TableRow android:layout_marginBottom="5dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="50"
+                        android:fontFamily="@font/poppins_regular"
+
+                        android:text="Quantity Pending"
+                        android:singleLine="true"
+                        android:ellipsize="end"
+                        />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="50"
+android:text="@string/quantitypending"
                         android:gravity="end"
                         android:fontFamily="@font/poppins_regular"
 

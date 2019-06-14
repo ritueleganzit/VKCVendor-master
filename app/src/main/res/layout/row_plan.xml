@@ -1,147 +1,122 @@
- <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/cardviewsuccess"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        app:cardBackgroundColor="#ffffff"
-        app:cardCornerRadius="5dp"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardviewsuccess"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:descendantFocusability="blocksDescendants"
+    app:cardBackgroundColor="#ffffff"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="5dp"
 
-        app:cardElevation="5dp"
-
-        app:cardUseCompatPadding="true">
+    app:cardUseCompatPadding="true">
 
 
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
 
-        <FrameLayout
+        <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp">
 
-            <LinearLayout
-                android:paddingLeft="10dp"
-                android:orientation="horizontal"
+            <TableLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/lin_profile"
+                android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
+                android:padding="5dp"
+                android:paddingTop="5dp">
 
-                <TableLayout
-                    android:layout_centerVertical="true"
-                    android:paddingTop="5dp"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:gravity="center_vertical"
-                    android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@+id/lin_profile"
-                    android:padding="5dp"
-                    >
+                <TableRow android:layout_marginBottom="5dp">
 
-                    <TableRow android:layout_marginBottom="5dp">
+                    <TextView
+                        android:id="@+id/ptxtnumber"
+                        android:layout_width="0dp"
+                        android:layout_weight="50"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/poppins_medium"
+                        android:singleLine="true"
+                        android:text="102566635"
+                        android:textColor="@color/red" />
+
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rc_art"
+
+                        android:layout_width="0dp"
+                        android:layout_weight="50"
+
+
+                        />
+
+                </TableRow>
+
+
+                <TableRow android:layout_marginBottom="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/green_bg"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:src="@drawable/ic_check" />
 
                         <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="50"
-                            android:text="102566635"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
                             android:fontFamily="@font/poppins_medium"
+                            android:gravity="center"
+                            android:paddingRight="5dp"
                             android:singleLine="true"
-                            android:ellipsize="end"
-                            android:textColor="@color/red" />
+                            android:text="MARK AS COMPLETED"
+                            android:textColor="#ffffff" />
+
+                    </LinearLayout>
 
 
+                </TableRow>
 
 
-                    </TableRow>
-
-                    <TableRow android:layout_marginBottom="5dp"
-                        android:layout_marginTop="5dp"
-                        >
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="50"
-
-                            android:text="13916 ladies Mrn - 5L =10"
-                            android:singleLine="true"
-                            android:ellipsize="end"
-                             />
+            </TableLayout>
 
 
+            <ImageView
+                android:id="@+id/lin_arrow"
+
+                android:layout_width="18dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+
+                android:layout_centerVertical="true"
+                android:background="@color/colorPrimaryDark" />
+
+        </LinearLayout>
 
 
-                    </TableRow>
-                    <TableRow android:layout_marginBottom="5dp"
-                        android:layout_marginTop="5dp"
-                        >
+    </FrameLayout>
 
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="50"
-
-                            android:text="13916 ladies Mrn - 5L =10"
-                            android:singleLine="true"
-                            android:ellipsize="end"
-                             />
-
-
-
-
-                    </TableRow>
-
-                    <TableRow android:layout_marginBottom="10dp">
-
-                      <LinearLayout
-                          android:layout_marginTop="5dp"
-                          android:background="@drawable/green_bg"
-                          android:layout_width="match_parent"
-                          android:gravity="center"
-                          android:layout_height="wrap_content"
-                          android:orientation="horizontal">
-                          <ImageView android:layout_width="wrap_content"
-                              android:paddingLeft="5dp"
-                              android:paddingRight="5dp"
-                              android:layout_height="wrap_content"
-                              android:src="@drawable/ic_check"/>
-                          <TextView
-                              android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-android:textColor="#ffffff"
-                              android:gravity="center"
-android:paddingRight="5dp"
-                              android:fontFamily="@font/poppins_medium"
-                              android:text="MARK AS COMPLETED"
-                              android:singleLine="true"
-                              android:ellipsize="end"
-                              />
-
-                      </LinearLayout>
-
-
-
-                    </TableRow>
-
-
-
-                </TableLayout>
-
-
-
-
-                <ImageView
-                    android:id="@+id/lin_arrow"
-
-                    android:background="@color/colorPrimaryDark"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-
-                    android:layout_width="18dp"
-                    android:layout_height="match_parent"
-                   />
-
-            </LinearLayout>
-
-
-        </FrameLayout>
-
-    </android.support.v7.widget.CardView>
+</android.support.v7.widget.CardView>

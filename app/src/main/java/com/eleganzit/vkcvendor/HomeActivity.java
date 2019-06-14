@@ -21,27 +21,32 @@ import com.eleganzit.vkcvendor.fragment.EntryFragment;
 import com.eleganzit.vkcvendor.fragment.MarkPOFragment;
 import com.eleganzit.vkcvendor.fragment.PlanFragment;
 import com.eleganzit.vkcvendor.fragment.ViewDefectsFragment;
+import com.eleganzit.vkcvendor.util.UserLoggedInSession;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    UserLoggedInSession userLoggedInSession;
 
-    TextView plan,entry,textTitle,tv_defects;
+    TextView plan, entry, textTitle, tv_defects;
     LinearLayout tablayout;
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        textTitle=findViewById(R.id.textTitle);
-        tv_defects=findViewById(R.id.tv_defects);
-        plan=findViewById(R.id.plan);
-        tablayout=findViewById(R.id.tablayout);
-        entry=findViewById(R.id.entry);
+        textTitle = findViewById(R.id.textTitle);
+        tv_defects = findViewById(R.id.tv_defects);
+        plan = findViewById(R.id.plan);
+        tablayout = findViewById(R.id.tablayout);
+        entry = findViewById(R.id.entry);
         setSupportActionBar(toolbar);
-getSupportActionBar().setElevation(0);
-toolbar.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
+        userLoggedInSession = new UserLoggedInSession(HomeActivity.this);
+
+        getSupportActionBar().setElevation(0);
+        toolbar.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -54,7 +59,7 @@ toolbar.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
         plan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 PlanFragment myPhotosFragment = new PlanFragment();
+                PlanFragment myPhotosFragment = new PlanFragment();
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.container, myPhotosFragment, "TAG")
                         .commit();
@@ -63,15 +68,16 @@ toolbar.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
         entry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 EntryFragment myPhotosFragment = new EntryFragment();
+                EntryFragment myPhotosFragment = new EntryFragment();
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.container, myPhotosFragment, "TAG")
                         .commit();
             }
-        });tv_defects.setOnClickListener(new View.OnClickListener() {
+        });
+        tv_defects.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 ViewDefectsFragment myPhotosFragment = new ViewDefectsFragment();
+                ViewDefectsFragment myPhotosFragment = new ViewDefectsFragment();
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.container, myPhotosFragment, "TAG")
                         .commit();
@@ -118,7 +124,7 @@ toolbar.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
             startActivity(new Intent(HomeActivity.this, MessageActivity.class));
-            overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
         } else if (id == R.id.markpo) {
             tablayout.setVisibility(View.GONE);
@@ -137,7 +143,7 @@ toolbar.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
                     .commit();
 
         } else if (id == R.id.nav_logout) {
-
+            userLoggedInSession.logoutUser();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
